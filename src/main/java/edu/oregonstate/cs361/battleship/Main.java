@@ -53,6 +53,7 @@ public class Main {
 
         System.out.println(shiptype);
         System.out.println(ore);
+        // test
         return "1";
     }
 
