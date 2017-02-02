@@ -16,8 +16,8 @@ public class BattleshipModel {
     Computer_Destroyer computer_destroyer = new Computer_Destroyer();
     Computer_Submarine computer_submarine = new Computer_Submarine();
     //Array of start objects used for coordinates, because client side expects them in ordered paris with "Across" and "Down" keys 
-    Start[] playerHits = new Start[20];
-    Start[] playerMisses = new Start[100];
-    Start[] computerHits = new Start[20];
-    Start[] computerMisses = new Start[100];
+    Start[] playerHits = new Start[0];
+    Start[] playerMisses = new Start[0];
+    Start[] computerHits = new Start[0];
+    Start[] computerMisses = new Start[0];
 }

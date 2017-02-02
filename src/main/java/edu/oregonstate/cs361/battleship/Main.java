@@ -44,7 +44,9 @@ public class Main {
     }
     //This function should accept an HTTP request and deseralize it into an actual Java object.
     private static BattleshipModel getModelFromReq(Request req){
-        return null;
+        Gson gson = new Gson();                                                                //creates a new Gson class variable
+        BattleshipModel battleshipmodel = gson.fromJson(req.body(), BattleshipModel.class);    //parses game model from json to a java object
+        return battleshipmodel;
     }
 
     //This controller should take a json object from the front End, and place the Ship as requested, and then return the object.
@@ -53,8 +55,9 @@ public class Main {
         int row = Integer.parseInt(req.params(":row"));
         int col = Integer.parseInt(req.params(":col"));
         String ore = req.params(":orientation");
+        BattleshipModel mine = getModelFromReq(req);
 
-        System.out.println(shiptype);
+        //System.out.println(mine.aircraftCarrier.name);
         System.out.println(ore);
         return "1";
     }
