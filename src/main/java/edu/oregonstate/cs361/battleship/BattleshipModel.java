@@ -1,8 +1,7 @@
 package edu.oregonstate.cs361.battleship;
 
 /**
- * Created by casters on 2/1/17.
- * Holds ship objects and arrays of objects containing x,y coordinates
+ * Created by michaelhilton on 1/26/17.
  */
 public class BattleshipModel {
     AircraftCarrier aircraftCarrier = new AircraftCarrier();

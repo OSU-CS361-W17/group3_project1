@@ -11,6 +11,7 @@ public class Main {
     public static void main(String[] args) {
         //This will allow us to server the static pages such as index.html, app.js, etc.
         staticFiles.location("/public");
+
         //This will listen to GET requests to /model and return a clean new model
         get("/model", (req, res) -> newModel());
         //This will listen to POST requests and expects to receive a game model, as well as location to fire to
@@ -20,7 +21,7 @@ public class Main {
     }
 
     //This function should return a new model
-    private static String newModel() {
+    static String newModel() {
         //creates a new board with all ships starting and ending at (0,0)
         BattleshipModel theBoard = new BattleshipModel();
         //only sets start and end coordinates for computer
@@ -40,6 +41,7 @@ public class Main {
         String retstring = retobj.toJson(theBoard);
         return retstring;
     }
+
     //This function should accept an HTTP request and deserialize it into an actual Java object.
     private static BattleshipModel getModelFromReq(Request req){
         Gson gson = new Gson();                                                                //creates a new Gson class variable
@@ -47,10 +49,17 @@ public class Main {
         return battleshipmodel;
     }
 
-    //This controller should take a json object from the front end, and place the ship as requested, and then return the object.
-    private static String placeShip(Request req) {
+   private static String placeShip(Request req) {
+        String shiptype = req.params(":id");
+        int row = Integer.parseInt(req.params(":row"));
+        int col = Integer.parseInt(req.params(":col"));
+        String ore = req.params(":orientation");
 
-        return null;
+        BattleshipModel mine = getModelFromReq(req);
+        System.out.println(shiptype);
+        System.out.println(ore);
+        // test
+        return "1";
     }
 
     //Similar to placeShip, but with firing.

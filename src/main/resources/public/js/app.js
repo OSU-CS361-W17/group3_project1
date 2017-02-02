@@ -5,7 +5,7 @@ $( document ).ready(function() {
 
   $.getJSON("model", function( json ) {
     gameModel = json;
-    displayGameState(gameModel);
+    displayGameState(json);
    });
 });
 
