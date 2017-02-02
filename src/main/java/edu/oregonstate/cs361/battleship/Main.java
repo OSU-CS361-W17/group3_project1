@@ -10,19 +10,13 @@ public class Main {
 
     public static void main(String[] args) {
         //This will allow us to server the static pages such as index.html, app.js, etc.
-        System.out.println("hello world");
         staticFiles.location("/public");
-
         //This will listen to GET requests to /model and return a clean new model
         get("/model", (req, res) -> newModel());
         //This will listen to POST requests and expects to receive a game model, as well as location to fire to
         post("/fire/:row/:col", (req, res) -> fireAt(req));
         //This will listen to POST requests and expects to receive a game model, as well as location to place the Ship
         post("/placeShip/:id/:row/:col/:orientation", (req, res) -> placeShip(req));
-        System.out.println("I will survive");
-        String theBoard = newModel();
-        System.out.println(theBoard);
-
     }
 
     //This function should return a new model
