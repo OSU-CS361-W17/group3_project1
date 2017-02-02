@@ -2,6 +2,7 @@ package edu.oregonstate.cs361.battleship;
 
 /**
  * Created by casters on 2/1/17.
+ * Same as Start class but only used in Ship objects
  */
 public class End {
     public int Across = 0;
