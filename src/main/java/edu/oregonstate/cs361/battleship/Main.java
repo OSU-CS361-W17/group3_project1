@@ -42,8 +42,8 @@ public class Main {
     }
     //This function should accept an HTTP request and deserialize it into an actual Java object.
     private static BattleshipModel getModelFromReq(Request req){
-        Gson gson = new Gson();
-        BattleshipModel battleshipmodel = gson.fromJson(req.body(), BattleshipModel.class);
+        Gson gson = new Gson();                                                                //creates a new Gson class variable
+        BattleshipModel battleshipmodel = gson.fromJson(req.body(), BattleshipModel.class);    //parses game model from json to a java object
         return battleshipmodel;
     }
 
