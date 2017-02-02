@@ -55,6 +55,7 @@ public class Main {
 
     //Similar to placeShip, but with firing.
     private static String fireAt(Request req) {
+        BattleshipModel map = getModelFromReq( req );
         return null;
     }
 
