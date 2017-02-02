@@ -2,6 +2,7 @@ package edu.oregonstate.cs361.battleship;
 
 /**
  * Created by casters on 2/1/17.
+ * Holds ship objects and arrays of objects containing x,y coordinates
  */
 public class BattleshipModel {
     AircraftCarrier aircraftCarrier = new AircraftCarrier();
@@ -14,6 +15,7 @@ public class BattleshipModel {
     Computer_Cruiser computer_cruiser = new Computer_Cruiser();
     Computer_Destroyer computer_destroyer = new Computer_Destroyer();
     Computer_Submarine computer_submarine = new Computer_Submarine();
+    //Array of start objects used for coordinates, because client side expects them in ordered paris with "Across" and "Down" keys 
     Start[] playerHits = new Start[20];
     Start[] playerMisses = new Start[100];
     Start[] computerHits = new Start[20];
