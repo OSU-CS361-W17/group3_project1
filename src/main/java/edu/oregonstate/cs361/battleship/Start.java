@@ -9,6 +9,7 @@ package edu.oregonstate.cs361.battleship;
 public class Start {
     public int Across = 0;
     public int Down = 0;
+    //used by newModel(), could be useful for fireAt() and placeShip()
     public void setStart(int x, int y) {
         Across = x;
         Down = y;
