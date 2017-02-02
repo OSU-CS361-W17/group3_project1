@@ -1,11 +1,11 @@
 package edu.oregonstate.cs361.battleship;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import spark.Request;
 import static spark.Spark.get;
 import static spark.Spark.post;
 import static spark.Spark.staticFiles;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -15,7 +15,7 @@ public class Main {
         get("/model", (req, res) -> newModel());
         //This will listen to POST requests and expects to receive a game model, as well as location to fire to
         post("/fire/:row/:col", (req, res) -> fireAt(req));
-        //This will listen to POST requests and expects to receive a game model, as well as location to place the Ship
+        //This will listen to POST requests and expects to receive a game model, as well as location to place the ship
         post("/placeShip/:id/:row/:col/:orientation", (req, res) -> placeShip(req));
     }
 
@@ -40,13 +40,16 @@ public class Main {
         String retstring = retobj.toJson(theBoard);
         return retstring;
     }
-    //This function should accept an HTTP request and deseralize it into an actual Java object.
+    //This function should accept an HTTP request and deserialize it into an actual Java object.
     private static BattleshipModel getModelFromReq(Request req){
-        return null;
+        Gson gson = new Gson();                                                                //creates a new Gson class variable
+        BattleshipModel battleshipmodel = gson.fromJson(req.body(), BattleshipModel.class);    //parses game model from json to a java object
+        return battleshipmodel;
     }
 
-    //This controller should take a json object from the front End, and place the Ship as requested, and then return the object.
+    //This controller should take a json object from the front end, and place the ship as requested, and then return the object.
     private static String placeShip(Request req) {
+
         return null;
     }
 
