@@ -51,6 +51,7 @@ public class Main {
         int col = Integer.parseInt(req.params(":col"));
         String ore = req.params(":orientation");
 
+        BattleshipModel mine = getModelFromReq(req);
         System.out.println(shiptype);
         System.out.println(ore);
         // test
