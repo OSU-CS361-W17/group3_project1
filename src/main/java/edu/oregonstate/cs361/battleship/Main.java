@@ -45,9 +45,14 @@ public class Main {
         return null;
     }
 
-    //This controller should take a json object from the front End, and place the Ship as requested, and then return the object.
-    private static String placeShip(Request req) {
-        string ship = req.attribute("id");
+   private static String placeShip(Request req) {
+        String shiptype = req.params(":id");
+        int row = Integer.parseInt(req.params(":row"));
+        int col = Integer.parseInt(req.params(":col"));
+        String ore = req.params(":orientation");
+
+        System.out.println(shiptype);
+        System.out.println(ore);
         return "1";
     }
 
