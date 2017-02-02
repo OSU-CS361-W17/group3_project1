@@ -58,7 +58,7 @@ public class Main {
         BattleshipModel mine = getModelFromReq(req);
 
         //System.out.println(mine.aircraftCarrier.name);
-        System.out.println(ore);
+        System.out.println(ore);[]
         return "1";
     }
 
