@@ -32,7 +32,6 @@ public class Main {
         theBoard.computer_destroyer.end.setEnd(7,5);
         theBoard.computer_submarine.start.setStart(9,6);
         theBoard.computer_submarine.end.setEnd(9,8);
-        System.out.println(theBoard.computer_submarine.start.Across);
         Gson retobj = new Gson();
         String retstring = retobj.toJson(theBoard);
         return retstring;
