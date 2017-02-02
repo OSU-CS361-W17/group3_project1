@@ -21,7 +21,9 @@ public class Main {
 
     //This function should return a new model
     private static String newModel() {
+        //creates a new board with all ships starting and ending at (0,0)
         BattleshipModel theBoard = new BattleshipModel();
+        //only sets start and end coordinates for computer
         theBoard.computer_aircraftCarrier.start.setStart(2,2);
         theBoard.computer_aircraftCarrier.end.setEnd(2,7);
         theBoard.computer_battleship.start.setStart(2,8);
@@ -32,7 +34,9 @@ public class Main {
         theBoard.computer_destroyer.end.setEnd(7,5);
         theBoard.computer_submarine.start.setStart(9,6);
         theBoard.computer_submarine.end.setEnd(9,8);
+        //Makes a gson obj to take in java objects
         Gson retobj = new Gson();
+        //puts gson obj in string for return to GET
         String retstring = retobj.toJson(theBoard);
         return retstring;
     }
