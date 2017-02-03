@@ -25,6 +25,7 @@ public class Main {
         //creates a new board with all ships starting and ending at (0,0)
         BattleshipModel theBoard = new BattleshipModel();
         //only sets start and end coordinates for computer
+
         theBoard.computer_aircraftCarrier.start.setStart(2,2);
         theBoard.computer_aircraftCarrier.end.setEnd(2,7);
         theBoard.computer_battleship.start.setStart(2,8);
@@ -50,16 +51,121 @@ public class Main {
     }
 
    private static String placeShip(Request req) {
+        //Gets all the information from the user in a form that the function can use
+        //shiptype is the type of ship the user wants to place example:aircraftCarrier
         String shiptype = req.params(":id");
+        //row and col are the variables where the start cordatates are stored
         int row = Integer.parseInt(req.params(":row"));
         int col = Integer.parseInt(req.params(":col"));
+        // Ore is where the orientation of the ship is stored
         String ore = req.params(":orientation");
 
+        //mine gets the game board model using the getModelFromReq function
         BattleshipModel mine = getModelFromReq(req);
-        System.out.println(shiptype);
-        System.out.println(ore);
+
+        // thex (the x) and they (the y) are variables used to find the end point for the ship
+        int thex = row;
+        int they = col;
+        //lorr (left or right) is used to make sure a ship does not go off the board
+        int lorr = 1;
+
+
+        if (shiptype.equals("aircraftCarrier")) {
+            int leng = mine.aircraftCarrier.length;
+            //System.out.println(leng);
+            if ((row + leng == 10)&(ore.equals("vertical"))) {
+                lorr = -1;
+            } else if ((col + leng == 10)&(ore.equals("horizontal"))) {
+                lorr = -1;
+            }
+            leng = leng * lorr;
+            //System.out.println(leng);
+            if (ore == "horizontal") {
+                thex = col + leng - 1;
+                they = row;
+            } else {
+                they = row + leng - 1;
+                thex = col;
+            }
+            mine.aircraftCarrier.start.setStart(row, col);
+            //System.out.println(mine.aircraftCarrier.start.Across);
+            mine.aircraftCarrier.end.setEnd(they, thex);
+        } else if (shiptype.equals("battleship")) {
+            int leng = mine.battleship.length;
+            if ((row + leng == 10)&(ore.equals("vertical"))) {
+                lorr = -1;
+            } else if ((col + leng == 10)&(ore.equals("horizontal"))) {
+                lorr = -1;
+            }
+            leng = leng * lorr;
+            if (ore == "horizontal") {
+                thex = col + leng - 1;
+                they = row;
+            } else {
+                they = row + leng - 1;
+                thex = col;
+            }
+            mine.battleship.start.setStart(row, col);
+            mine.battleship.end.setEnd(they, thex);
+        } else if (shiptype.equals("cruiser")) {
+            int leng = mine.cruiser.length;
+            if ((row + leng == 10)&(ore.equals("vertical"))) {
+                lorr = -1;
+            } else if ((col + leng == 10)&(ore.equals("horizontal"))) {
+                lorr = -1;
+            }
+            leng = leng * lorr;
+            if (ore == "horizontal") {
+                thex = col + leng - 1;
+                they = row;
+            } else {
+                they = row + leng - 1;
+                thex = col;
+            }
+            mine.cruiser.start.setStart(row, col);
+            mine.cruiser.end.setEnd(they, thex);
+        } else if (shiptype.equals("destroyer")) {
+            int leng = mine.destroyer.length;
+            if ((row + leng == 10)&(ore.equals("vertical"))) {
+                lorr = -1;
+            } else if ((col + leng == 10)&(ore.equals("horizontal"))) {
+                lorr = -1;
+            }
+            leng = leng * lorr;
+            if (ore == "horizontal") {
+                thex = col + leng - 1;
+                they = row;
+            } else {
+                they = row + leng - 1;
+                thex = col;
+            }
+            mine.destroyer.start.setStart(row, col);
+            mine.destroyer.end.setEnd(they, thex);
+        } else  {                                      //if (shiptype == "Submarine")
+            int leng = mine.submarine.length;
+            if ((row + leng == 10)&(ore.equals("vertical"))) {
+                lorr = -1;
+            } else if ((col + leng == 10)&(ore.equals("horizontal"))) {
+                lorr = -1;
+            }
+            leng = leng * lorr;
+            if (ore == "horizontal") {
+                thex = col + leng - 1;
+                they = row;
+            } else {
+                they = row + leng - 1;
+                thex = col;
+            }
+            mine.submarine.start.setStart(row, col);
+            mine.submarine.end.setEnd(they, thex);
+        }
+        //System.out.println(shiptype);
+        //System.out.println(ore);
         // test
-        return "1";
+       Gson mygson = new Gson();
+       //puts gson obj in string for return to GET
+       String myreturn = mygson.toJson(mine);
+       return myreturn;
     }
 
     //Similar to placeShip, but with firing.
