@@ -44,29 +44,7 @@ public class Main {
         for(int a = 0; a<16; a++){
             System.out.print(compSquares[a].Across);
             System.out.print(",");
-            System.outp://localhost:4567" + path);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod(method);
-            String boardString = Main.newModel();
-            Gson gson = new Gson();
-            BattleshipModel theBoard = gson.fromJson(boardString, BattleshipModel.class);
-            connection.setDoOutput(true);
-            if(theBoard != null) { connection.setDoInput(true);
-
-                java.io.OutputStream os =  connection.getOutputStream();
-
-                byte [] outputInBytes = boardString.getBytes("UTF-8");
-
-                os.write(outputInBytes);
-
-            }
-            connection.connect();
-            String body = IOUtils.toString(connection.getInputStream());
-            return new TestResponse(connection.getResponseCode(), body);
-        } catch (IOException e) {
-            e.printStackTrace();
-            fail("Sending request failed: " + e.getMessage());
-            return null;t.println(compSquares[a].Down);
+            System.out.println(compSquares[a].Down);
         }
         */
         //Makes a gson obj to take in java objects
