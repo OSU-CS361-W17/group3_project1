@@ -75,9 +75,9 @@ public class Main {
         //mine gets the game board model using the getModelFromReq function
         BattleshipModel mine = getModelFromReq(req);
 
-        // thex (the x) and they (the y) are variables used to find the end point for the ship
-        int thex = row;
-        int they = col;
+        // endrow (end row) and endcol (end col) are variables used to find the end point for the ship
+        int endrow = row;
+        int endcol = col;
         //lorr (left or right) is used to make sure a ship does not go off the board
         int lorr = 1;
 
@@ -92,16 +92,17 @@ public class Main {
             }
             leng = leng * lorr;
             //System.out.println(leng);
-            if (ore == "horizontal") {
-                thex = col + leng - 1;
-                they = row;
+            if (ore.equals("horizontal")) {
+                endcol = col + leng;
+                endrow = row;
+                //System.out.println("in h");
             } else {
-                they = row + leng - 1;
-                thex = col;
+                endrow = row + leng;
+                endcol = col;
             }
-            mine.aircraftCarrier.start.setStart(row, col);
+            mine.aircraftCarrier.start.setStart(col, row);
             //System.out.println(mine.aircraftCarrier.start.Across);
-            mine.aircraftCarrier.end.setEnd(they, thex);
+            mine.aircraftCarrier.end.setEnd(endcol,endrow);
         } else if (shiptype.equals("battleship")) {
             int leng = mine.battleship.length;
             if ((row + leng == 10)&(ore.equals("vertical"))) {
@@ -110,15 +111,15 @@ public class Main {
                 lorr = -1;
             }
             leng = leng * lorr;
-            if (ore == "horizontal") {
-                thex = col + leng - 1;
-                they = row;
+            if (ore.equals("horizontal")) {
+                endcol = col + leng;
+                endrow = row;
             } else {
-                they = row + leng - 1;
-                thex = col;
+                endrow = row + leng;
+                endcol = col;
             }
-            mine.battleship.start.setStart(row, col);
-            mine.battleship.end.setEnd(they, thex);
+            mine.battleship.start.setStart(col, row);
+            mine.battleship.end.setEnd(endcol, endrow);
         } else if (shiptype.equals("cruiser")) {
             int leng = mine.cruiser.length;
             if ((row + leng == 10)&(ore.equals("vertical"))) {
@@ -127,15 +128,15 @@ public class Main {
                 lorr = -1;
             }
             leng = leng * lorr;
-            if (ore == "horizontal") {
-                thex = col + leng - 1;
-                they = row;
+            if (ore.equals("horizontal")) {
+                endcol = col + leng;
+                endrow = row;
             } else {
-                they = row + leng - 1;
-                thex = col;
+                endrow = row + leng;
+                endcol = col;
             }
-            mine.cruiser.start.setStart(row, col);
-            mine.cruiser.end.setEnd(they, thex);
+            mine.cruiser.start.setStart(col, row);
+            mine.cruiser.end.setEnd(endcol, endrow);
         } else if (shiptype.equals("destroyer")) {
             int leng = mine.destroyer.length;
             if ((row + leng == 10)&(ore.equals("vertical"))) {
@@ -144,15 +145,15 @@ public class Main {
                 lorr = -1;
             }
             leng = leng * lorr;
-            if (ore == "horizontal") {
-                thex = col + leng - 1;
-                they = row;
+            if (ore.equals("horizontal")) {
+                endcol = col + leng;
+                endrow = row;
             } else {
-                they = row + leng - 1;
-                thex = col;
+                endrow = row + leng;
+                endcol = col;
             }
-            mine.destroyer.start.setStart(row, col);
-            mine.destroyer.end.setEnd(they, thex);
+            mine.destroyer.start.setStart(col, row);
+            mine.destroyer.end.setEnd(endcol, endrow);
         } else  {                                      //if (shiptype == "Submarine")
             int leng = mine.submarine.length;
             if ((row + leng == 10)&(ore.equals("vertical"))) {
@@ -161,15 +162,15 @@ public class Main {
                 lorr = -1;
             }
             leng = leng * lorr;
-            if (ore == "horizontal") {
-                thex = col + leng - 1;
-                they = row;
+            if (ore.equals("horizontal")) {
+                endcol = col + leng;
+                endrow = row;
             } else {
-                they = row + leng - 1;
-                thex = col;
+                endrow = row + leng;
+                endcol = col;
             }
-            mine.submarine.start.setStart(row, col);
-            mine.submarine.end.setEnd(they, thex);
+            mine.submarine.start.setStart(col, row);
+            mine.submarine.end.setEnd(endcol, endrow);
         }
         //System.out.println(shiptype);
         //System.out.println(ore);
@@ -181,7 +182,6 @@ public class Main {
     }
 
     //Similar to placeShip, but with firing.
-
     protected static String fireAt(Request req) {
         BattleshipModel theBoard = getModelFromReq( req );
         int fire_row = Integer.parseInt(req.params(":row"));
@@ -193,14 +193,11 @@ public class Main {
         //theBoard.playerMisses[4].setStart(fire_row, fire_col);    tries to set playermisses, creates error
         System.out.println("Player Misses Length is");
         System.out.println(playermisses_length);
-
         System.out.println("Fired at row");
         System.out.println(fire_row);
         System.out.println("column");
         System.out.println(fire_col);
-
         return "1";
-
     }
 
 }
