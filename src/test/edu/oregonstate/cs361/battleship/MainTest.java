@@ -80,6 +80,90 @@ class MainTest {
         boardString = gson.toJson(theBoard);
         //assertEquals(200, res.status);
         assertEquals(boardString,res3.body);
+
+        TestResponse res4 = request("POST", "/placeShip/submarine/1/1/horizontal");
+
+        boardString = Main.newModel();
+        theBoard = gson.fromJson(boardString, BattleshipModel.class);
+        theBoard.submarine.start.Across = 1;
+        theBoard.submarine.start.Down = 1;
+        theBoard.submarine.end.Across = 3;
+        theBoard.submarine.end.Down = 1;
+        boardString = gson.toJson(theBoard);
+        //assertEquals(200, res.status);
+        assertEquals(boardString,res4.body);
+
+        TestResponse res5 = request("POST", "/placeShip/battleship/1/1/vertical");
+
+        boardString = Main.newModel();
+        theBoard = gson.fromJson(boardString, BattleshipModel.class);
+        theBoard.battleship.start.Across = 1;
+        theBoard.battleship.start.Down = 1;
+        theBoard.battleship.end.Across = 1;
+        theBoard.battleship.end.Down = 5;
+        boardString = gson.toJson(theBoard);
+        //assertEquals(200, res.status);
+        assertEquals(boardString,res5.body);
+
+        TestResponse res6 = request("POST", "/placeShip/battleship/1/1/horizontal");
+
+        boardString = Main.newModel();
+        theBoard = gson.fromJson(boardString, BattleshipModel.class);
+        theBoard.battleship.start.Across = 1;
+        theBoard.battleship.start.Down = 1;
+        theBoard.battleship.end.Across = 5;
+        theBoard.battleship.end.Down = 1;
+        boardString = gson.toJson(theBoard);
+        //assertEquals(200, res.status);
+        assertEquals(boardString,res6.body);
+
+        TestResponse res7 = request("POST", "/placeShip/destroyer/1/1/vertical");
+
+        boardString = Main.newModel();
+        theBoard = gson.fromJson(boardString, BattleshipModel.class);
+        theBoard.destroyer.start.Across = 1;
+        theBoard.destroyer.start.Down = 1;
+        theBoard.destroyer.end.Across = 1;
+        theBoard.destroyer.end.Down = 3;
+        boardString = gson.toJson(theBoard);
+        //assertEquals(200, res.status);
+        assertEquals(boardString,res7.body);
+
+        TestResponse res8 = request("POST", "/placeShip/destroyer/1/1/horizontal");
+
+        boardString = Main.newModel();
+        theBoard = gson.fromJson(boardString, BattleshipModel.class);
+        theBoard.destroyer.start.Across = 1;
+        theBoard.destroyer.start.Down = 1;
+        theBoard.destroyer.end.Across = 3;
+        theBoard.destroyer.end.Down = 1;
+        boardString = gson.toJson(theBoard);
+        //assertEquals(200, res.status);
+        assertEquals(boardString,res8.body);
+
+        TestResponse res9 = request("POST", "/placeShip/cruiser/1/1/vertical");
+
+        boardString = Main.newModel();
+        theBoard = gson.fromJson(boardString, BattleshipModel.class);
+        theBoard.cruiser.start.Across = 1;
+        theBoard.cruiser.start.Down = 1;
+        theBoard.cruiser.end.Across = 1;
+        theBoard.cruiser.end.Down = 4;
+        boardString = gson.toJson(theBoard);
+        //assertEquals(200, res.status);
+        assertEquals(boardString,res9.body);
+
+        TestResponse res10 = request("POST", "/placeShip/cruiser/1/1/horizontal");
+
+        boardString = Main.newModel();
+        theBoard = gson.fromJson(boardString, BattleshipModel.class);
+        theBoard.cruiser.start.Across = 1;
+        theBoard.cruiser.start.Down = 1;
+        theBoard.cruiser.end.Across = 4;
+        theBoard.cruiser.end.Down = 1;
+        boardString = gson.toJson(theBoard);
+        //assertEquals(200, res.status);
+        assertEquals(boardString,res10.body);
     }
 
     private TestResponse request(String method, String path) {
