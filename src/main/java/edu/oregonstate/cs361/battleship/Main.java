@@ -25,6 +25,7 @@ public class Main {
         //creates a new board with all ships starting and ending at (0,0)
         BattleshipModel theBoard = new BattleshipModel();
         //only sets start and end coordinates for computer
+
         theBoard.computer_aircraftCarrier.start.setStart(2,2);
         theBoard.computer_aircraftCarrier.end.setEnd(2,7);
         theBoard.computer_battleship.start.setStart(2,8);
@@ -56,8 +57,76 @@ public class Main {
         String ore = req.params(":orientation");
 
         BattleshipModel mine = getModelFromReq(req);
-        System.out.println(shiptype);
-        System.out.println(ore);
+        int thex = row;
+        int they = col;
+        int lorr = 1;
+        if (row == 10) {
+            lorr = -1;
+        } else if (col == 10) {
+            lorr = -1;
+        }
+
+        if (shiptype == "aircraftCarrier") {
+            int leng = mine.aircraftCarrier.length;
+            leng = leng * lorr;
+            System.out.println(leng);
+            if (ore == "horizontal") {
+                thex = col + leng;
+                they = row;
+            } else {
+                they = row + leng;
+                thex = col;
+            }
+            mine.aircraftCarrier.start.setStart(row, col);
+            System.out.println(mine.aircraftCarrier.start.Across);
+            mine.aircraftCarrier.end.setEnd(they, thex);
+        } else if (shiptype == "Battleship") {
+            int leng = mine.battleship.length;
+            if (ore == "horizontal") {
+                thex = col + leng;
+                they = row;
+            } else {
+                they = row + leng;
+                thex = col;
+            }
+            mine.battleship.start.setStart(row, col);
+            mine.battleship.end.setEnd(they, thex);
+        } else if (shiptype == "Cruiser") {
+            int leng = mine.cruiser.length;
+            if (ore == "horizontal") {
+                thex = col + leng;
+                they = row;
+            } else {
+                they = row + leng;
+                thex = col;
+            }
+            mine.cruiser.start.setStart(row, col);
+            mine.cruiser.end.setEnd(they, thex);
+        } else if (shiptype == "Destroyer") {
+            int leng = mine.destroyer.length;
+            if (ore == "horizontal") {
+                thex = col + leng;
+                they = row;
+            } else {
+                they = row + leng;
+                thex = col;
+            }
+            mine.destroyer.start.setStart(row, col);
+            mine.destroyer.end.setEnd(they, thex);
+        } else  {                                      //if (shiptype == "Submarine")
+            int leng = mine.submarine.length;
+            if (ore == "horizontal") {
+                thex = col + leng;
+                they = row;
+            } else {
+                they = row + leng;
+                thex = col;
+            }
+            mine.submarine.start.setStart(row, col);
+            mine.submarine.end.setEnd(they, thex);
+        }
+        //System.out.println(shiptype);
+        //System.out.println(ore);
         // test
         return "1";
     }
