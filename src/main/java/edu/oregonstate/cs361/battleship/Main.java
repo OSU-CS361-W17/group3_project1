@@ -1,5 +1,4 @@
 package edu.oregonstate.cs361.battleship;
-
 import com.google.gson.Gson;
 import spark.Request;
 import static spark.Spark.get;
@@ -11,7 +10,6 @@ public class Main {
     public static void main(String[] args) {
         //This will allow us to server the static pages such as index.html, app.js, etc.
         staticFiles.location("/public");
-
         //This will listen to GET requests to /model and return a clean new model
         get("/model", (req, res) -> newModel());
         //This will listen to POST requests and expects to receive a game model, as well as location to fire to
@@ -36,6 +34,19 @@ public class Main {
         theBoard.computer_destroyer.end.setEnd(7,5);
         theBoard.computer_submarine.start.setStart(9,6);
         theBoard.computer_submarine.end.setEnd(9,8);
+        /*
+        IMPORTANT: this is how occupiedSquares() is called, it's picky.
+        Start[] compSquares = new Start[16];
+        for(int a = 0; a<16; a++){
+            compSquares[a] = new Start();
+        }
+        compSquares = theBoard.occupiedSquares(theBoard, "computer");
+        for(int a = 0; a<16; a++){
+            System.out.print(compSquares[a].Across);
+            System.out.print(",");
+            System.out.println(compSquares[a].Down);
+        }
+        */
         //Makes a gson obj to take in java objects
         Gson retobj = new Gson();
         //puts gson obj in string for return to GET
@@ -49,6 +60,7 @@ public class Main {
         BattleshipModel battleshipmodel = gson.fromJson(req.body(), BattleshipModel.class);    //parses game model from json to a java object
         return battleshipmodel;
     }
+
 
    protected static String placeShip(Request req) {
         //Gets all the information from the user in a form that the function can use
@@ -171,8 +183,21 @@ public class Main {
 
     //Similar to placeShip, but with firing.
     protected static String fireAt(Request req) {
-        BattleshipModel map = getModelFromReq( req );
-        return null;
+        BattleshipModel theBoard = getModelFromReq( req );
+        int fire_row = Integer.parseInt(req.params(":row"));
+        int fire_col = Integer.parseInt(req.params(":col"));
+
+        Start fire_coord = new Start();                 //Creating a pair to insert into playerhits/playermisses
+        fire_coord.setStart(fire_row, fire_col);        //Sets across and down in fire_coord
+        int playermisses_length = theBoard.playerMisses.length;     //gets length of playermisses
+        //theBoard.playerMisses[4].setStart(fire_row, fire_col);    tries to set playermisses, creates error
+        System.out.println("Player Misses Length is");
+        System.out.println(playermisses_length);
+        System.out.println("Fired at row");
+        System.out.println(fire_row);
+        System.out.println("column");
+        System.out.println(fire_col);
+        return "1";
     }
 
 }
