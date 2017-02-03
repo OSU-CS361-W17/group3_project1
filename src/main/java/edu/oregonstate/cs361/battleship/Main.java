@@ -64,8 +64,23 @@ public class Main {
 
     //Similar to placeShip, but with firing.
     private static String fireAt(Request req) {
-        BattleshipModel map = getModelFromReq( req );
-        return null;
+        BattleshipModel theBoard = getModelFromReq( req );
+        int fire_row = Integer.parseInt(req.params(":row"));
+        int fire_col = Integer.parseInt(req.params(":col"));
+
+        Start fire_coord = new Start();                 //Creating a pair to insert into playerhits/playermisses
+        fire_coord.setStart(fire_row, fire_col);        //Sets across and down in fire_coord
+        int playermisses_length = theBoard.playerMisses.length;     //gets length of playermisses
+        //theBoard.playerMisses[4].setStart(fire_row, fire_col);    tries to set playermisses, creates error
+        System.out.println("Player Misses Length is");
+        System.out.println(playermisses_length);
+
+        System.out.println("Fired at row");
+        System.out.println(fire_row);
+        System.out.println("column");
+        System.out.println(fire_col);
+
+        return "1";
     }
 
 }
