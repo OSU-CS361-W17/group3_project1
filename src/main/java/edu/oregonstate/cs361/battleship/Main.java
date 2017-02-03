@@ -44,13 +44,13 @@ public class Main {
     }
 
     //This function should accept an HTTP request and deserialize it into an actual Java object.
-    private static BattleshipModel getModelFromReq(Request req){
+    protected static BattleshipModel getModelFromReq(Request req){
         Gson gson = new Gson();                                                                //creates a new Gson class variable
         BattleshipModel battleshipmodel = gson.fromJson(req.body(), BattleshipModel.class);    //parses game model from json to a java object
         return battleshipmodel;
     }
 
-   private static String placeShip(Request req) {
+   protected static String placeShip(Request req) {
         //Gets all the information from the user in a form that the function can use
         //shiptype is the type of ship the user wants to place example:aircraftCarrier
         String shiptype = req.params(":id");
@@ -63,9 +63,9 @@ public class Main {
         //mine gets the game board model using the getModelFromReq function
         BattleshipModel mine = getModelFromReq(req);
 
-        // thex (the x) and they (the y) are variables used to find the end point for the ship
-        int thex = row;
-        int they = col;
+        // endrow (end row) and endcol (end col) are variables used to find the end point for the ship
+        int endrow = row;
+        int endcol = col;
         //lorr (left or right) is used to make sure a ship does not go off the board
         int lorr = 1;
 
@@ -80,16 +80,17 @@ public class Main {
             }
             leng = leng * lorr;
             //System.out.println(leng);
-            if (ore == "horizontal") {
-                thex = col + leng - 1;
-                they = row;
+            if (ore.equals("horizontal")) {
+                endcol = col + leng;
+                endrow = row;
+                //System.out.println("in h");
             } else {
-                they = row + leng - 1;
-                thex = col;
+                endrow = row + leng;
+                endcol = col;
             }
-            mine.aircraftCarrier.start.setStart(row, col);
+            mine.aircraftCarrier.start.setStart(col, row);
             //System.out.println(mine.aircraftCarrier.start.Across);
-            mine.aircraftCarrier.end.setEnd(they, thex);
+            mine.aircraftCarrier.end.setEnd(endcol,endrow);
         } else if (shiptype.equals("battleship")) {
             int leng = mine.battleship.length;
             if ((row + leng == 10)&(ore.equals("vertical"))) {
@@ -98,15 +99,15 @@ public class Main {
                 lorr = -1;
             }
             leng = leng * lorr;
-            if (ore == "horizontal") {
-                thex = col + leng - 1;
-                they = row;
+            if (ore.equals("horizontal")) {
+                endcol = col + leng;
+                endrow = row;
             } else {
-                they = row + leng - 1;
-                thex = col;
+                endrow = row + leng;
+                endcol = col;
             }
-            mine.battleship.start.setStart(row, col);
-            mine.battleship.end.setEnd(they, thex);
+            mine.battleship.start.setStart(col, row);
+            mine.battleship.end.setEnd(endcol, endrow);
         } else if (shiptype.equals("cruiser")) {
             int leng = mine.cruiser.length;
             if ((row + leng == 10)&(ore.equals("vertical"))) {
@@ -115,15 +116,15 @@ public class Main {
                 lorr = -1;
             }
             leng = leng * lorr;
-            if (ore == "horizontal") {
-                thex = col + leng - 1;
-                they = row;
+            if (ore.equals("horizontal")) {
+                endcol = col + leng;
+                endrow = row;
             } else {
-                they = row + leng - 1;
-                thex = col;
+                endrow = row + leng;
+                endcol = col;
             }
-            mine.cruiser.start.setStart(row, col);
-            mine.cruiser.end.setEnd(they, thex);
+            mine.cruiser.start.setStart(col, row);
+            mine.cruiser.end.setEnd(endcol, endrow);
         } else if (shiptype.equals("destroyer")) {
             int leng = mine.destroyer.length;
             if ((row + leng == 10)&(ore.equals("vertical"))) {
@@ -132,15 +133,15 @@ public class Main {
                 lorr = -1;
             }
             leng = leng * lorr;
-            if (ore == "horizontal") {
-                thex = col + leng - 1;
-                they = row;
+            if (ore.equals("horizontal")) {
+                endcol = col + leng;
+                endrow = row;
             } else {
-                they = row + leng - 1;
-                thex = col;
+                endrow = row + leng;
+                endcol = col;
             }
-            mine.destroyer.start.setStart(row, col);
-            mine.destroyer.end.setEnd(they, thex);
+            mine.destroyer.start.setStart(col, row);
+            mine.destroyer.end.setEnd(endcol, endrow);
         } else  {                                      //if (shiptype == "Submarine")
             int leng = mine.submarine.length;
             if ((row + leng == 10)&(ore.equals("vertical"))) {
@@ -149,15 +150,15 @@ public class Main {
                 lorr = -1;
             }
             leng = leng * lorr;
-            if (ore == "horizontal") {
-                thex = col + leng - 1;
-                they = row;
+            if (ore.equals("horizontal")) {
+                endcol = col + leng;
+                endrow = row;
             } else {
-                they = row + leng - 1;
-                thex = col;
+                endrow = row + leng;
+                endcol = col;
             }
-            mine.submarine.start.setStart(row, col);
-            mine.submarine.end.setEnd(they, thex);
+            mine.submarine.start.setStart(col, row);
+            mine.submarine.end.setEnd(endcol, endrow);
         }
         //System.out.println(shiptype);
         //System.out.println(ore);
@@ -169,7 +170,7 @@ public class Main {
     }
 
     //Similar to placeShip, but with firing.
-    private static String fireAt(Request req) {
+    protected static String fireAt(Request req) {
         BattleshipModel map = getModelFromReq( req );
         return null;
     }
