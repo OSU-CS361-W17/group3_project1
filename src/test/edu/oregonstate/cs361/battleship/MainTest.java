@@ -85,6 +85,13 @@ class MainTest {
             assertTrue(testArr[a].Down < boardArr[a].Down);
         }
     }
+
+    @Test
+    public void testFireAt(){
+        //Jackon's test area
+    }
+
+
     @Test
     public void TestgetModelFromReq() {
         TestResponse test = request("POST", "/placeShip/aircraftCarrier/2/2/horizontal");
@@ -222,6 +229,18 @@ class MainTest {
         boardString = gson.toJson(theBoard);
         //assertEquals(200, res.status);
         assertEquals(boardString,res10.body);
+
+        /*TestResponse res11 = request("POST", "/placeShip/battleship/10/10/vertical");
+
+        boardString = Main.newModel();
+        theBoard = gson.fromJson(boardString, BattleshipModel.class);
+        theBoard.cruiser.start.Across = 10;
+        theBoard.cruiser.start.Down = 10;
+        theBoard.cruiser.end.Across = 7;
+        theBoard.cruiser.end.Down = 10;
+        boardString = gson.toJson(theBoard);
+        //assertEquals(200, res.status);
+        assertEquals(boardString,res11.body);*/
     }
 
     private TestResponse request(String method, String path) {
