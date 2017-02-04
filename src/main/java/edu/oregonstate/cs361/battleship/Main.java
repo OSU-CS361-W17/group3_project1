@@ -25,6 +25,8 @@ public class Main {
         //creates a new board with all ships starting and ending at (0,0)
         BattleshipModel theBoard = new BattleshipModel();
         //only sets start and end coordinates for computer
+
+
         theBoard.computer_aircraftCarrier.start.setStart(2,2);
         theBoard.computer_aircraftCarrier.end.setEnd(2,7);
         theBoard.computer_battleship.start.setStart(2,8);
@@ -48,6 +50,7 @@ public class Main {
             System.out.println(compSquares[a].Down);
         }
         */
+
         //Makes a gson obj to take in java objects
         Gson retobj = new Gson();
         //puts gson obj in string for return to GET
@@ -56,14 +59,18 @@ public class Main {
     }
 
     //This function should accept an HTTP request and deserialize it into an actual Java object.
+
     protected static BattleshipModel getModelFromReq(Request req){
+
         Gson gson = new Gson();                                                                //creates a new Gson class variable
         BattleshipModel battleshipmodel = gson.fromJson(req.body(), BattleshipModel.class);    //parses game model from json to a java object
         return battleshipmodel;
     }
 
 
+
    protected static String placeShip(Request req) {
+
         //Gets all the information from the user in a form that the function can use
         //shiptype is the type of ship the user wants to place example:aircraftCarrier
         String shiptype = req.params(":id");
@@ -73,6 +80,8 @@ public class Main {
         int col = Integer.parseInt(req.params(":col"));
         // Ore is where the orientation of the ship is stored
         String ore = req.params(":orientation");
+
+
 
         //mine gets the game board model using the getModelFromReq function
         BattleshipModel mine = getModelFromReq(req);
@@ -90,6 +99,7 @@ public class Main {
             if ((row + leng == 10)&(ore.equals("vertical"))) {
                 lorr = -1;
             } else if ((col + leng == 10)&(ore.equals("horizontal"))) {
+
                 lorr = -1;
             }
             leng = leng * lorr;
@@ -187,10 +197,12 @@ public class Main {
             }
             mine.submarine.start.setStart(col, row);
             mine.submarine.end.setEnd(endcol, endrow);
+
         }
         //System.out.println(shiptype);
         //System.out.println(ore);
         // test
+
        Gson mygson = new Gson();
        //puts gson obj in string for return to GET
        String myreturn = mygson.toJson(mine);
@@ -200,20 +212,26 @@ public class Main {
     //Similar to placeShip, but with firing.
     protected static String fireAt(Request req) {
         BattleshipModel theBoard = getModelFromReq( req );
+
         int fire_row = Integer.parseInt(req.params(":row"));
         int fire_col = Integer.parseInt(req.params(":col"));
+        int fire_hit = 0;  //fire_hit
 
-        Start fire_coord = new Start();                 //Creating a pair to insert into playerhits/playermisses
-        fire_coord.setStart(fire_row, fire_col);        //Sets across and down in fire_coord
-        int playermisses_length = theBoard.playerMisses.length;     //gets length of playermisses
-        //theBoard.playerMisses[4].setStart(fire_row, fire_col);    tries to set playermisses, creates error
-        System.out.println("Player Misses Length is");
-        System.out.println(playermisses_length);
-        System.out.println("Fired at row");
-        System.out.println(fire_row);
-        System.out.println("column");
-        System.out.println(fire_col);
-        return "1";
+
+        fire_hit += check_ship_for_hit(theBoard, theBoard.aircraftCarrier, fire_row, fire_col);
+        fire_hit += check_ship_for_hit(theBoard, theBoard.cruiser, fire_row, fire_col);
+        fire_hit += check_ship_for_hit(theBoard, theBoard.battleship, fire_row, fire_col);
+        fire_hit += check_ship_for_hit(theBoard, theBoard.destroyer, fire_row, fire_col);
+        fire_hit += check_ship_for_hit(theBoard, theBoard.submarine, fire_row, fire_col);
+
+        System.out.println("Fire Hit");
+        System.out.println(fire_hit);
+        theBoard = update_Player_Miss(fire_hit, theBoard, fire_row, fire_col);
+
+        Gson gson = new Gson();
+        //puts gson obj in string for return to GET
+        String temp = gson.toJson(theBoard);
+        return temp;
+  
     }
-
 }
