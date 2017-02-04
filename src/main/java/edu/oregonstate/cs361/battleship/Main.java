@@ -209,6 +209,106 @@ public class Main {
        return myreturn;
     }
 
+    public static int check_ship_for_hit(BattleshipModel theBoard, Ship ship1, int shot_x, int shot_y){
+        System.out.print("HERE");
+        System.out.println(ship1.start.Across + " " + ship1.start.Down);
+        System.out.println(ship1.end.Across + " " + ship1.end.Down);
+
+        int ship_end_x = ship1.end.Across;
+        int ship_end_y = ship1.end.Down;
+        int ship_start_x = ship1.start.Across;
+        int ship_start_y = ship1.start.Down;
+
+        int fire_status;  //fire_hit
+        fire_status = check_ship_ore(ship_start_x, ship_start_y, ship_end_x, ship_end_y, shot_x, shot_y);
+
+        System.out.println("Fire Status");
+        System.out.println(fire_status);
+
+        return fire_status;
+    }
+
+    public static int check_ship_ore(int start_x, int start_y, int end_x, int end_y, int shot_x, int shot_y) {
+        if (end_x - start_x != 0) {
+            int status = check_if_hit(start_x, end_x, start_y, shot_x, shot_y);
+            System.out.println("Status:");
+            System.out.println(status);
+            return status;
+        } else if (end_y - start_y != 0) {
+            int status = check_if_hit(start_y, end_y, start_x, shot_x, shot_y);
+            System.out.println("Status:");
+            System.out.println(status);
+            return status;
+        }
+        return 0; //Error
+    }
+
+    public static int check_if_hit(int ship_start, int ship_end, int ship_pos, int shot_x, int shot_y) {
+        if (ship_end > ship_start) { //If the end is larger than the start
+            int ship_min = ship_start;
+            int ship_max = ship_end;
+            System.out.println(ship_min);
+            System.out.println(ship_max);
+            for (int b = ship_min; b < ship_max + 1; b++) {
+                System.out.println(b + " " + ship_pos);
+                if (shot_x == b && shot_y == ship_pos) {
+                    System.out.println("HIT");
+                    return 1;
+                }
+            }
+        } else if (ship_end < ship_start) {
+            int ship_min = ship_end;
+            int ship_max = ship_start;
+            System.out.println(ship_min);
+            System.out.println(ship_max);
+            for (int b = ship_min; b < ship_max + 1; b++) {
+                System.out.println(b + " " + ship_pos);
+                if (shot_x == b && shot_y == ship_pos) {
+                    System.out.println("HIT");
+                    return 1;
+                }
+            }
+        }
+        return 0;
+    }
+
+    public static BattleshipModel update_Player_Miss(int hit, BattleshipModel theBoard, int x, int y){
+        if (hit == 0) {
+            int playermisses_length = theBoard.playerMisses.length;     //gets length of playermisses
+            Start[] newplayermisses = new Start[playermisses_length + 1];
+            for (int i = 0; i < playermisses_length; i++) {
+                newplayermisses[i] = new Start();
+                newplayermisses[i] = theBoard.playerMisses[i];
+            }
+            newplayermisses[playermisses_length] = new Start();
+            newplayermisses[playermisses_length].setStart(x, y);
+            theBoard.playerMisses = newplayermisses;
+            System.out.println("playermisses array:");
+            for (int j = 0; j < (playermisses_length + 1); j++) {
+                System.out.println(j + ":" + "[" + theBoard.playerMisses[j].Across + " " + theBoard.playerMisses[j].Down + "]");
+            }
+            return theBoard;
+        }
+        if (hit == 1) {
+            int playerhits_length = theBoard.playerHits.length;     //gets length of playermisses
+            Start[] newplayerhits = new Start[playerhits_length + 1];
+            for (int i = 0; i < playerhits_length; i++) {
+                newplayerhits[i] = new Start();
+                newplayerhits[i] = theBoard.playerHits[i];
+            }
+            newplayerhits[playerhits_length] = new Start();
+            newplayerhits[playerhits_length].setStart(x, y);
+            theBoard.playerHits = newplayerhits;
+            System.out.println("playerHits array:");
+            for (int j = 0; j < (playerhits_length + 1); j++) {
+                System.out.println(j + ":" + "[" + theBoard.playerHits[j].Across + " " + theBoard.playerHits[j].Down + "]");
+
+            }
+            return theBoard;
+        }
+        return theBoard;
+    }
+
     //Similar to placeShip, but with firing.
     protected static String fireAt(Request req) {
         BattleshipModel theBoard = getModelFromReq( req );
