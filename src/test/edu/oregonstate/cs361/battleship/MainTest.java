@@ -86,11 +86,20 @@ class MainTest {
         }
     }
 
+    /*
     @Test
     public void testFireAt(){
-        //Jackon's test area
-    }
+        TestResponse res = request("POST", "/fire/1/1");
 
+        String boardString = Main.newModel();
+        Gson gson = new Gson();
+        BattleshipModel Board = gson.fromJson(boardString, BattleshipModel.class);
+        Board.playerMisses[0].Across= 1;
+        Board.playerMisses[0].Down = 1;
+        boardString = gson.toJson(Board);
+        assertEquals(boardString, res.body);
+    }
+    */
 
     @Test
     public void TestgetModelFromReq() {
