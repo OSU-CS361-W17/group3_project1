@@ -1,4 +1,5 @@
 var gameModel;
+var currModel;
 
 //This function will be called once the page is loaded.  It will get a new game model from the back end, and display it.
 $( document ).ready(function() {
