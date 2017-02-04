@@ -209,50 +209,45 @@ public class Main {
        return myreturn;
     }
 
+    //Called from fireAt, calls 2 more functions to check for a hit
     public static int check_ship_for_hit(BattleshipModel theBoard, Ship ship1, int shot_x, int shot_y){
-        System.out.print("HERE");
-        System.out.println(ship1.start.Across + " " + ship1.start.Down);
-        System.out.println(ship1.end.Across + " " + ship1.end.Down);
+        //System.out.println(ship1.start.Across + " " + ship1.start.Down);
+        //System.out.println(ship1.end.Across + " " + ship1.end.Down);
 
         int ship_end_x = ship1.end.Across;
         int ship_end_y = ship1.end.Down;
         int ship_start_x = ship1.start.Across;
         int ship_start_y = ship1.start.Down;
 
-        int fire_status;  //fire_hit
+        int fire_status;  //fire_hit is 1 for hit, 0 for miss
         fire_status = check_ship_ore(ship_start_x, ship_start_y, ship_end_x, ship_end_y, shot_x, shot_y);
-
-        System.out.println("Fire Status");
-        System.out.println(fire_status);
-
         return fire_status;
     }
 
+    //middle function, figures out orientation of ship from coordinates
     public static int check_ship_ore(int start_x, int start_y, int end_x, int end_y, int shot_x, int shot_y) {
-        if (end_x - start_x != 0) {
-            int status = check_if_hit(start_x, end_x, start_y, shot_x, shot_y);
-            System.out.println("Status:");
-            System.out.println(status);
-            return status;
-        } else if (end_y - start_y != 0) {
+        if (end_x - start_x != 0) { //Checks which way ship is oriented
+            int status = check_if_hit(start_x, end_x, start_y, shot_x, shot_y); //calls next function
+            return status;          // status is either a 1 for a hit or 0 for a miss
+        }
+        else if (end_y - start_y != 0) {
             int status = check_if_hit(start_y, end_y, start_x, shot_x, shot_y);
-            System.out.println("Status:");
-            System.out.println(status);
             return status;
         }
         return 0; //Error
     }
 
+    //third function in the chain to be called. Actually compares ship squares to shot square
     public static int check_if_hit(int ship_start, int ship_end, int ship_pos, int shot_x, int shot_y) {
         if (ship_end > ship_start) { //If the end is larger than the start
-            int ship_min = ship_start;
+            int ship_min = ship_start; //then the start is the min
             int ship_max = ship_end;
             System.out.println(ship_min);
             System.out.println(ship_max);
-            for (int b = ship_min; b < ship_max + 1; b++) {
-                System.out.println(b + " " + ship_pos);
-                if (shot_x == b && shot_y == ship_pos) {
-                    System.out.println("HIT");
+            for (int b = ship_min; b < ship_max + 1; b++) { //loop through all the coordinates occupied by ship
+                //System.out.println(b + " " + ship_pos);
+                if (shot_x == b && shot_y == ship_pos) { //if the coordinates match...
+                    System.out.println("HIT"); //its a hit
                     return 1;
                 }
             }
@@ -262,29 +257,30 @@ public class Main {
             System.out.println(ship_min);
             System.out.println(ship_max);
             for (int b = ship_min; b < ship_max + 1; b++) {
-                System.out.println(b + " " + ship_pos);
+                //System.out.println(b + " " + ship_pos);
                 if (shot_x == b && shot_y == ship_pos) {
                     System.out.println("HIT");
                     return 1;
                 }
             }
         }
+        System.out.println("MISS");
         return 0;
     }
 
     public static BattleshipModel update_Player_Miss(int hit, BattleshipModel theBoard, int x, int y){
-        if (hit == 0) {
-            int playermisses_length = theBoard.playerMisses.length;     //gets length of playermisses
+        if (hit == 0) { //If it was a miss...
+            int playermisses_length = theBoard.playerMisses.length;
             Start[] newplayermisses = new Start[playermisses_length + 1];
             for (int i = 0; i < playermisses_length; i++) {
                 newplayermisses[i] = new Start();
-                newplayermisses[i] = theBoard.playerMisses[i];
+                newplayermisses[i] = theBoard.playerMisses[i]; //copy playermisses to new array
             }
-            newplayermisses[playermisses_length] = new Start();
+            newplayermisses[playermisses_length] = new Start(); //add one more member to new playermisses array
             newplayermisses[playermisses_length].setStart(x, y);
-            theBoard.playerMisses = newplayermisses;
+            theBoard.playerMisses = newplayermisses; //set old array to new array
             System.out.println("playermisses array:");
-            for (int j = 0; j < (playermisses_length + 1); j++) {
+            for (int j = 0; j < (playermisses_length + 1); j++) { //print out the array
                 System.out.println(j + ":" + "[" + theBoard.playerMisses[j].Across + " " + theBoard.playerMisses[j].Down + "]");
             }
             return theBoard;
@@ -294,13 +290,13 @@ public class Main {
             Start[] newplayerhits = new Start[playerhits_length + 1];
             for (int i = 0; i < playerhits_length; i++) {
                 newplayerhits[i] = new Start();
-                newplayerhits[i] = theBoard.playerHits[i];
+                newplayerhits[i] = theBoard.playerHits[i]; //copy playermisses to new array
             }
-            newplayerhits[playerhits_length] = new Start();
+            newplayerhits[playerhits_length] = new Start();//add one more member to new playermisses array
             newplayerhits[playerhits_length].setStart(x, y);
-            theBoard.playerHits = newplayerhits;
+            theBoard.playerHits = newplayerhits; //set old array to new array
             System.out.println("playerHits array:");
-            for (int j = 0; j < (playerhits_length + 1); j++) {
+            for (int j = 0; j < (playerhits_length + 1); j++) {//print out the array
                 System.out.println(j + ":" + "[" + theBoard.playerHits[j].Across + " " + theBoard.playerHits[j].Down + "]");
 
             }
@@ -315,17 +311,16 @@ public class Main {
 
         int fire_row = Integer.parseInt(req.params(":row"));
         int fire_col = Integer.parseInt(req.params(":col"));
-        int fire_hit = 0;  //fire_hit
+        int fire_hit = 0;  //fire_hit is set to 1 if a hit is found
 
-
+        //Checking each ship for a hit, assuming no ships overlap
         fire_hit += check_ship_for_hit(theBoard, theBoard.aircraftCarrier, fire_row, fire_col);
         fire_hit += check_ship_for_hit(theBoard, theBoard.cruiser, fire_row, fire_col);
         fire_hit += check_ship_for_hit(theBoard, theBoard.battleship, fire_row, fire_col);
         fire_hit += check_ship_for_hit(theBoard, theBoard.destroyer, fire_row, fire_col);
         fire_hit += check_ship_for_hit(theBoard, theBoard.submarine, fire_row, fire_col);
 
-        System.out.println("Fire Hit");
-        System.out.println(fire_hit);
+        //Updates appropriate arrays with coordinates of shot
         theBoard = update_Player_Miss(fire_hit, theBoard, fire_row, fire_col);
 
         Gson gson = new Gson();
