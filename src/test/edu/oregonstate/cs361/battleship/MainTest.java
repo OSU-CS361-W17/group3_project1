@@ -86,7 +86,7 @@ class MainTest {
         }
     }
 
-    /*
+
     @Test
     public void testFireAt(){
         TestResponse res = request("POST", "/fire/1/1");
@@ -94,12 +94,27 @@ class MainTest {
         String boardString = Main.newModel();
         Gson gson = new Gson();
         BattleshipModel Board = gson.fromJson(boardString, BattleshipModel.class);
-        Board.playerMisses[0].Across= 1;
-        Board.playerMisses[0].Down = 1;
+        Start[] temp = new Start[1];
+        temp[0] = new Start(); //add one more member to new playermisses array
+        temp[0].setStart(1, 1);
+        Board.playerMisses = temp;
         boardString = gson.toJson(Board);
         assertEquals(boardString, res.body);
+
+        TestResponse res1 = request("POST", "/placeShip/aircraftCarrier/1/1/horizontal");
+
+        boardString = Main.newModel();
+        Gson gson1 = new Gson();
+        BattleshipModel theBoard = gson.fromJson(boardString, BattleshipModel.class);
+        theBoard.aircraftCarrier.start.Across = 1;
+        theBoard.aircraftCarrier.start.Down = 1;
+        theBoard.aircraftCarrier.end.Across = 6;
+        theBoard.aircraftCarrier.end.Down = 1;
+        boardString = gson.toJson(theBoard);
+        //assertEquals(200, res.status);
+        assertEquals(boardString,res1.body);
     }
-    */
+
 
     @Test
     public void TestgetModelFromReq() {
