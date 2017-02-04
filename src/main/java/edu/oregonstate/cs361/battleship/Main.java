@@ -68,6 +68,7 @@ public class Main {
         String shiptype = req.params(":id");
         //row and col are the variables where the start cordatates are stored
         int row = Integer.parseInt(req.params(":row"));
+       // System.out.println(row);
         int col = Integer.parseInt(req.params(":col"));
         // Ore is where the orientation of the ship is stored
         String ore = req.params(":orientation");
@@ -105,12 +106,17 @@ public class Main {
             mine.aircraftCarrier.end.setEnd(endcol,endrow);
         } else if (shiptype.equals("battleship")) {
             int leng = mine.battleship.length;
-            if ((row + leng == 10)&(ore.equals("vertical"))) {
-                lorr = -1;
-            } else if ((col + leng == 10)&(ore.equals("horizontal"))) {
-                lorr = -1;
-            }
-            leng = leng * lorr;
+            /*if (ore.equals("vertical")) {
+                int myhold = leng + row;
+                if (10 <= myhold) {
+                    lorr = -1;
+                }
+            } else if (ore.equals("horizontal")) {
+                if (col + leng >= 10) {
+                    lorr = -1;
+                }
+            }*/
+            //leng = leng * lorr;
             if (ore.equals("horizontal")) {
                 endcol = col + leng;
                 endrow = row;
@@ -118,6 +124,15 @@ public class Main {
                 endrow = row + leng;
                 endcol = col;
             }
+            //System.out.println(lorr);
+            /*if (lorr == -1) {
+                int hold = endrow;
+                endrow = row;
+                row = hold;
+                hold = endcol;
+                endcol = col;
+                col = hold;
+            }*/
             mine.battleship.start.setStart(col, row);
             mine.battleship.end.setEnd(endcol, endrow);
         } else if (shiptype.equals("cruiser")) {
