@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import spark.Request;
 import spark.Spark;
 import spark.utils.IOUtils;
 
@@ -84,6 +85,21 @@ class MainTest {
             assertTrue(testArr[a].Down < boardArr[a].Down);
         }
     }
+    @Test
+    public void TestgetModelFromReq() {
+        TestResponse test = request("POST", "/placeShip/aircraftCarrier/2/2/horizontal");
+        String boardString = Main.newModel();
+        Gson gson = new Gson();
+        BattleshipModel board = gson.fromJson(boardString, BattleshipModel.class);
+        board.aircraftCarrier.start.Across = 2;
+        board.aircraftCarrier.start.Down = 2;
+        board.aircraftCarrier.end.Across = 7;
+        board.aircraftCarrier.end.Down = 2;
+        boardString = gson.toJson(board);
+        assertEquals(boardString,test.body);
+    }
+
+
     @Test
     public void testPlaceShip() {
         TestResponse res = request("POST", "/placeShip/aircraftCarrier/1/1/horizontal");
