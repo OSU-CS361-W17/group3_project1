@@ -296,7 +296,7 @@ public class Main {
             newplayerhits[playerhits_length].setStart(x, y);
             theBoard.playerHits = newplayerhits; //set old array to new array
             System.out.println("playerHits array:");
-            for (int j = 0; j < (playerhits_length + 1); j++) {//print out the array
+            for (int j = 0; j < (playerhits_length + 1); j++) {  //print out the array
                 System.out.println(j + ":" + "[" + theBoard.playerHits[j].Across + " " + theBoard.playerHits[j].Down + "]");
 
             }
