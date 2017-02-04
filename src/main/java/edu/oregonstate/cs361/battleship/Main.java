@@ -1,4 +1,5 @@
 package edu.oregonstate.cs361.battleship;
+
 import com.google.gson.Gson;
 import spark.Request;
 import static spark.Spark.get;
@@ -10,6 +11,7 @@ public class Main {
     public static void main(String[] args) {
         //This will allow us to server the static pages such as index.html, app.js, etc.
         staticFiles.location("/public");
+
         //This will listen to GET requests to /model and return a clean new model
         get("/model", (req, res) -> newModel());
         //This will listen to POST requests and expects to receive a game model, as well as location to fire to
@@ -23,7 +25,6 @@ public class Main {
         //creates a new board with all ships starting and ending at (0,0)
         BattleshipModel theBoard = new BattleshipModel();
         //only sets start and end coordinates for computer
-
         theBoard.computer_aircraftCarrier.start.setStart(2,2);
         theBoard.computer_aircraftCarrier.end.setEnd(2,7);
         theBoard.computer_battleship.start.setStart(2,8);
